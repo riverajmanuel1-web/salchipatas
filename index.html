@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unas Flores Amarillas Para Ti 💛 by AlexDev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <!-- 
+
+Contáctame:
+
+    * Invitame un café
+ https://buymeacoffee.com/alexx.dev
+
+    * Portafolio Web
+ https://alexxdev.vercel.app
+
+    * Sigueme en tiktok
+ https://www.tiktok.com/@alexx.dev?is_from_webapp=1&sender_device=pc 
+ 
+    *Canal de WhatsApp
+ https://whatsapp.com/channel/0029VazQEXq90x2vIdNkrH1p
+
+-->
+
+    <style>
+        :root {
+            --primary-color: #FFD700; 
+            --background-start: #fffde7;
+            --background-end: #fff3e0;
+            --button-bg: #ffc107;
+            --button-hover-bg: #ffa000;
+        }
+        *{
+          cursor: url('1.png'), auto !important;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: "Indie Flower";
+            background: linear-gradient(135deg, var(--background-start), var(--background-end));
+            cursor: url('1.png'), auto !important;
+        }
+
+        #start-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 1s ease-out;
+        }
+
+        #start-screen h1 {
+            font-size: 3rem;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        #startButton {
+            font-family: "Indie Flower";
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            border: none;
+            background-color: var(--button-bg);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        #startButton:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background-color: var(--button-hover-bg);
+        }
+
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #mensaje {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3.5vw; 
+            color: #2c2c2c;
+            text-align: center;
+            font-weight: 900;
+            z-index: 10;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            animation: fadeInMessage 3s ease-in-out forwards;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            width: 80%; 
+            max-width: 800px; 
+        }
+
+        #mensaje .text-content {
+            margin-bottom: 20px; 
+        }
+
+        #mensaje img {
+            max-width: 450px; 
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0); 
+            margin-top: 10px; 
+            object-fit: contain; 
+        }
+
+        @keyframes fadeInMessage {
+            0% { opacity: 0; transform: translate(-50%, -60%); }
+            100% { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .flor {
+            position: absolute;
+            user-select: none;
+            pointer-events: none;
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: fall-and-sway linear forwards;
+        }
+
+        @keyframes fall-and-sway {
+            0% {
+                top: -10%;
+                opacity: 0.8;
+                transform: translateX(0) rotateZ(0deg);
+            }
+            20% {
+                transform: translateX(-20px) rotateZ(45deg);
+            }
+            40% {
+                transform: translateX(20px) rotateZ(90deg);
+            }
+            60% {
+                transform: translateX(-20px) rotateZ(135deg);
+            }
+            80% {
+                transform: translateX(20px) rotateZ(180deg);
+            }
+            100% {
+                top: 110%;
+                opacity: 1;
+                transform: translateX(0px) rotateZ(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <h1>Unas flores amarillas para ti... 💛</h1>
+        <button id="startButton">Haz clic aquí</button>
+    </div>
+
+    <div id="main-content">
+        <div id="mensaje">
+            <div class="text-content">
+                <span id="para-quien"></span><br>
+                <span id="de-quien"></span>
+            </div>
+            <img id="flor-dedicatoria" src="" alt="Imagen de dedicatoria">
+        </div>
+    </div>
+    
+    <audio id="background-music" loop>
+        <source src="https://files.catbox.moe/g2a92e.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <script>
+        const PARA_QUIEN = "¡Aquí están tus flores amarillas!";
+        const DE_QUIEN = "Mi niña";
+        
+     
+        const IMAGEN_DEDICATORIA_URL = 'love.png'; 
+        
+
+        const IMAGENES_FLORES_LLUVIA = [
+            '1.png',
+            '2.png',
+            '3.png',
+            '4.png',
+        ];
+
+        const startButton = document.getElementById('startButton');
+        const startScreen = document.getElementById('start-screen');
+        const mainContent = document.getElementById('main-content');
+        const music = document.getElementById('background-music');
+        const florDedicatoria = document.getElementById('flor-dedicatoria');
+
+        document.getElementById('para-quien').textContent = PARA_QUIEN;
+        document.getElementById('de-quien').textContent = DE_QUIEN;
+
+        if (IMAGEN_DEDICATORIA_URL) {
+            florDedicatoria.src = IMAGEN_DEDICATORIA_URL;
+            florDedicatoria.style.display = 'block'; 
+        } else {
+            florDedicatoria.style.display = 'none';
+        }
+
+        startButton.addEventListener('click', () => {
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+            }, 1000);
+
+            mainContent.classList.add('visible');
+
+            music.play().catch(error => {
+                console.log("El navegador impidió la reproducción automática. El usuario debe interactuar primero.", error);
+            });
+
+            setInterval(crearFlor, 400);
+        });
+
+        function crearFlor() {
+            const flor = document.createElement('div');
+            flor.classList.add('flor');
+
+            const imagenAleatoria = IMAGENES_FLORES_LLUVIA[Math.floor(Math.random() * IMAGENES_FLORES_LLUVIA.length)];
+            flor.style.backgroundImage = `url(${imagenAleatoria})`;
+
+            flor.style.left = `${Math.random() * 100}vw`;
+            const size = Math.random() * (60 - 20) + 20; 
+            flor.style.width = `${size}px`;
+            flor.style.height = `${size}px`;
+
+            const duration = Math.random() * (12 - 6) + 6; 
+            const delay = Math.random() * 2;
+            flor.style.animationDuration = `${duration}s`;
+            flor.style.animationDelay = `${delay}s`;
+
+            document.body.appendChild(flor);
+
+            setTimeout(() => {
+                flor.remove();
+            }, (duration + delay) * 1000);
+        }
+    </script>
+</body>
+</html>
